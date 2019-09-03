@@ -8,12 +8,12 @@ script:
   - docker run -p 80:80 react-app
 
 deploy:
-  - provider: elasticbeanstalk
-  - region: "us-east-2"
-  - app: "docker-react"
-  - env: "DockerReact-env"
-  - bucket_name: "/elasticbeanstalk-us-east-2-620993599493"
-  - bucket_path: "docker-react"
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-620993599493"
+  bucket_path: "docker-react"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
