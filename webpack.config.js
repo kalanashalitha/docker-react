@@ -1,5 +1,12 @@
+const path = require('path');
 module.exports = {
     devtool: 'source-map',
+
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'react.bundle.js'
+    },
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
@@ -10,15 +17,12 @@ module.exports = {
             }
         },
         {
-            test:/\.css$/,
-            use:['style-loader','css-loader']
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
         },
         {
             test: /\.svg$/,
             loader: 'svg-inline-loader'
         }]
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
     }
 };
