@@ -24,7 +24,7 @@ class App extends React.Component {
 
           <p>You are not signed</p>
           <div id="google-login-button" class="g-signin2" onClick={this.googleInit}>login</div>
-          <button href="#" onClick={()=>{this.signOut()}}>Sign out...</button>
+          <button href="#" onClick={() => { this.signOut() }}>Sign out...</button>
         </header>
       </div>
     );
@@ -49,12 +49,17 @@ class App extends React.Component {
     });
   }
   authenticateUser(loggedInUser) {
-    console.log(JSON.stringify(loggedInUser.getBasicProfile()))
-    // this.userService.authenticateUser(this.userIdToken).subscribe((_)=>{
-    //   console.log(_)
-    // })
+    console.log(JSON.stringify(loggedInUser))
+    fetch('api/user/authenticate', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: loggedInUser['Zi']['id_token'],
+    });
   }
-  googleInit=() =>{
+  googleInit = () => {
     console.log("1112233333")
     console.log("11122")
     gapi.load('auth2', () => {
