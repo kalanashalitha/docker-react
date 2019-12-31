@@ -1,5 +1,6 @@
 /* global gapi */
 import React from 'react';
+import LoginForm from './LoginForm';
 import logo from './logo.svg';
 import './App.css';
 
@@ -16,7 +17,18 @@ class App extends React.Component {
     }
     // this.signOut = this.signOut.bind(this);
   }
+
+  /*Welcome(props){
+    return <h1>hi, {props.name}</h1>
+  }*/
+
   render() {
+      const signupForm = (<div>
+                <b>sign up form</b><br/>
+                enter your details here!
+                </div>);
+
+                //const newElement = <Welcome name="kalana"/>
     return (
       <div className="App">
         <header className="App-header">
@@ -26,12 +38,16 @@ class App extends React.Component {
           <div id="google-login-button" class="g-signin2" onClick={this.googleInit}>login</div>
           <button href="#" onClick={() => { this.signOut() }}>Sign out...</button>
         </header>
+        <button href="#" onClick={() => { this.createUser() }}>create user</button>
+        {signupForm}<br/>
+        <LoginForm name="kalana shalitha"/>
       </div>
     );
   }
+
   getContent() {
     if (this.state.isSignedIn) {
-      return <p>hello user, you're signed in </p>
+      return <p>hello user, youre signedin </p>
     } else {
       return (
         <div>
@@ -48,9 +64,8 @@ class App extends React.Component {
       console.log('User signed out');
     });
   }
-  authenticateUser(loggedInUser) {
-    console.log(JSON.stringify(loggedInUser))
-    fetch('api/user/authenticate', {
+  async authenticateUser(loggedInUser) {
+    const response = await fetch('api/user/authenticate', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -58,10 +73,22 @@ class App extends React.Component {
       },
       body: loggedInUser['Zi']['id_token'],
     });
+    const myJson = await response.json();
+    console.log(JSON.stringify(myJson));
   }
+
+  async createUser() {
+      const response = await fetch('api/user/create', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }
+      });
+      const myJson = await response.json();
+      console.log(JSON.stringify(myJson));
+    }
   googleInit = () => {
-    console.log("1112233333")
-    console.log("11122")
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.getAuthInstance({
         client_id: '968290368770-41286pviqm741nh77i2e7bcvc81p45qd.apps.googleusercontent.com',
@@ -89,6 +116,7 @@ class App extends React.Component {
       //this.attachSignin(document.getElementById('google-login-button'));
     });
   }
+
   onSignIn(googleUser) {
     //console.log(JSON.stringify(googleUser))
     var profile = googleUser.getBasicProfile();

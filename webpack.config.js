@@ -1,15 +1,14 @@
 const path = require('path');
 module.exports = {
+        entry: ['babel-polyfill', './src/index.js'],
     devtool: 'source-map',
-
-    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'react.bundle.js'
     },
     module: {
         rules: [{
-            test: /\.(js|jsx)$/,
+            test: /*/\.(js|jsx)$/*//\.jsx?/,
             exclude: /node_modules/,
             loader: "babel-loader",
             options: {
